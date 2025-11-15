@@ -58,12 +58,28 @@ execute "colorscheme  " . colorscheme_name              | " Set colorscheme base
 
 
 " [ Setting Backspace Key  ] ----------------------------------------
-" Normal Mode
-nnoremap <Char-0x07F> <BS>           | " Map Delete key to Backspace
-noremap! <C-?> <C-h>                 | " Map Ctrl + Delete to Backspace
+" Always let Vim handle backspace properly
+set backspace=indent,eol,start                              | " Set backspace to handle indent, eol, and start 
+set t_kb=                                                   | " Clear any existing backspace key setting
 
-" Insert Mode
-inoremap <Char-0x07F> <BS>           | " Map Delete key to Backspace in Insert mode
+" Universal Backspace Fix (works on ALL terminals)
+" Case 1: Terminal sends DEL ( ^? )
+inoremap <Char-0x7f> <BS>
+nnoremap <Char-0x7f> <BS>
+cnoremap <Char-0x7f> <BS>
+
+
+" Case 2: Terminal sends Ctrl-H ( ^H )
+inoremap <C-H> <BS>
+nnoremap <C-H> <BS>
+cnoremap <C-H> <BS>
+
+" Case 3: Terminal sends actual <BS>
+inoremap <BS> <BS>
+nnoremap <BS> <BS>
+cnoremap <BS> <BS>
+" -------------------------------- [ End Backspace Key Setting ] ---------
+
 " [ Plugin Diff Char Configuration ] ----------------------------------------
 let g:DiffUnit = 'Char'              | " Set Diff Unit to Char
 let g:DiffColors = 3                 | " Set number of colors for Diff Char
@@ -91,6 +107,7 @@ nnoremap <leader>hc :windo set list!<CR>                | " Set command for togg
 nnoremap <leader>lr :windo set relativenumber!<CR>      | " Set command for toggling relative line numbers
 nnoremap <leader>sp :windo set spell!<CR>               | " Set command for spell check
 nnoremap <leader>sy :windo syntax enable!<CR>           | " Set command for toggling syntax
+nnoremap Q :qa<CR>                                      | " Map Q to quit all
 noremap <leader>ctc :windo set listchars=tab:▸▸⋮,eol:$,space:.,trail:~,extends:>,precedes:<<CR>:windo set list!<CR>         | " Advanced toggle listchars
 
 
@@ -357,8 +374,8 @@ set timeoutlen=500                                                      | " Set 
 let g:which_key_map = {}                                                | " Initialize which_key_map dictionary
 let g:which_key_sep = ': '                                              | " Set separator for which-key entries 
 let g:which_key_use_floating_win = 1                                    | " Use floating window for which-key popup
-nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>                 | " Map leader key to trigger which-key popup
-
+" Map leader space to trigger which-key popup
+nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 
 let g:which_key_map['e'] = ['Lexplorer 20', 'Explorer']                                 | " Map 'e' to 'Lexplorer 20'
 let g:which_key_map['['] = ['GoUpToParentBracket', 'GoUpParentBrak']                    | " Map '[' to 'GoUpToParentBracket'
