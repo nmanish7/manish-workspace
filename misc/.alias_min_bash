@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# vim_bin_path="/global/freeware/Linux/RHEL7/vim-9.1/bin/"
+vim_bin_path=""
+vimrc="~/.vimrc"
+
+set_aliases() {
+    alias vim="${vim_bin_path}vim -u $vimrc"
+    alias vimdiff="${vim_bin_path}vimdiff -u $vimrc"
+    export P4DIFF="${vim_bin_path}vimdiff -u $vimrc"
+
+    vcd() {
+        tmp="$(mktemp)"
+
+        "${vim_bin_path}vim" -u $vimrc  \
+            +"let g:netrw_sort_by='name'" \
+            +"let g:netrw_sort_direction='r'" \
+            +"Explore" \
+            +"nnoremap Q :qa<CR>" \
+            +"autocmd VimLeave * call writefile([expand('%:p:h') != '' ? expand('%:p:h') : getcwd()], '$tmp')" \
+            "$@"
+
+        if [[ -f "$tmp" ]]; then
+            cd "$(cat "$tmp")" && rm -f "$tmp"
+        fi
+    }
+
+    echo "Aliases and environment variables set."
+}
+
+unset_aliases() {
+    unalias vim 2>/dev/null
+    unalias vimdiff 2>/dev/null
+    unset P4DIFF
+    unset -f vcd 2>/dev/null
+    echo "Aliases and environment variables unset."
+}
+
+# Check if aliases already set
+if alias vim &>/dev/null && alias vimdiff &>/dev/null && [[ -n "$P4DIFF" ]]; then
+    unset_aliases
+else
+    set_aliases
+fi

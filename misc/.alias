@@ -1,0 +1,82 @@
+# .alias file for tcsh shell or csh shell
+
+### Setting tcsh
+if ($?tcsh) then
+    # Already in tcsh
+else if ($?csh) then
+    # In csh, switch to tcsh
+    exec tcsh
+else
+    # Not in csh or tcsh, can't switch
+    echo "Not in csh or tcsh, can't switch to tcsh"
+    exit 1
+endif
+
+### Setting Vim Binding Modes for tcsh
+alias novim "bindkey -e"
+alias yesvim "bindkey -v"
+
+### Function to bind ssh with x11 forwarding
+alias ssh "ssh -X"
+
+
+### Get the Vim version
+# set vim_version = `vim --version | grep "VIM - Vi IMproved" | cut -d " " -f 5`
+
+### Check if the Vim version is less than 9
+# if ( `echo "$vim_version < 9" | bc` == 1 ) then
+    # If the Vim version is less than 9, load Vim 8.0 module
+    # module load vim/8.0
+# endif
+
+### Setting custom binaries paths
+setenv PATH "~/custompackages/packages/":${PATH}
+
+### VIM aliases
+alias vimz "vim -u ~/custompackages/config/.myvimrc"
+alias vim "vim -u ~/.vimrc"
+
+### FZF enabled aliases 
+alias pfg "~/custompackages/packages/pfg.sh"
+alias pf  "fzf --preview='less {}' --bind alt-up:preview-page-up,alt-down:preview-page-down,alt-w:preview-up,alt-s:preview-down --preview-window='right:70%:wrap'"
+
+
+### pfg Assemblies compose files searcher
+# alias pfg_camd "ls *_compose_unix.amd64.out* | pfg --latestlog"
+# alias pfg_ramd "ls *_rrreg.amd64.out* | pfg --latestlog"
+
+
+### help menu
+# alias mhelp "source ~/custompackages/packages/fzf_alias.sh"
+
+
+### Grep color
+alias grep "grep --color='auto'"
+
+### Docker-compose alias
+alias dcm "docker-compose"
+
+### Alias creating new temp file
+alias newt "source ~/custompackages/packages/new -t"
+
+### Alias to activate python virtual environment for API projects
+# alias apip "source ~/.venv/bin/activate.csh"
+
+
+### Alias for resetting the tmux prefix key as it got hung up in the client side terminal but normal command work well
+alias tmr 'tmux set -g prefix C-a \; bind-key C-a send-prefix \; source-file ~/.tmux.conf'
+
+### alias dmanishc. "cd /slowfs/swe82/dmanish/"
+
+### Log command alias
+alias logcmd '& tee `date +%b%d_%Hh%Mm%Ss`_\!:1.log; echo "✅ Log files:"; ls -t *s_\!:1.log | xargs -n1 readlink -f'
+
+### Enhanced vcd alias using vim netrw and saving last directory to a temp file
+alias vcd 'set tmp=`mktemp`; vim +"let g:netrw_sort_by='"'"'name'"'"'" +"let g:netrw_sort_direction='"'"'r'"'"'" +"Explore" +"nnoremap Q :qa!<CR>" +"autocmd VimLeave * call writefile([expand('"'"'%:p:h'"'"') != '"'"''"'"' ? expand('"'"'%:p:h'"'"') : getcwd()], '"'"'$tmp'"'"')" \!*; cd "`cat $tmp`"; rm -f "$tmp"'
+
+
+
+
+
+
+
