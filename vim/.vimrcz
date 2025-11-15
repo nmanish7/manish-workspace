@@ -1,0 +1,345 @@
+" ------------------------------------------------------------
+" Author: Manish Das
+" Vim Version Support: 9.1.741
+" File: ~/.vimrcz
+" Created: 2025-11-15
+" Description: Vim config for IDE like features
+" ------------------------------------------------------------
+
+" ============================================================
+" [ Leader Key Setup ]
+" ============================================================
+let mapleader = "\<Space>"              | " Set the leader key to space
+
+
+" ============================================================
+" [ Basic Settings ]
+" ============================================================
+
+filetype plugin indent on                   | " Enable filetype detection, plugins, and indenting
+set nocompatible                            | " Disable Vi compatibility, This is used to remove 'ESC[?4m' error whenever we open the vim
+filetype off                                | " Disable filetype detection temporarily for performance   
+set number                                  | " Show line numbers
+syntax on                                   | " Enable syntax highlighting
+set tabstop=4                               | " Number of spaces that a <Tab> in the file counts for
+set shiftwidth=4                            | " Number of spaces to use for each step of (auto)indent
+set expandtab                               | " Use spaces instead of tabs
+set incsearch                               | " Enable incremental search
+set hlsearch                                | " Enable highlight search
+set splitbelow                              | " Always split below
+set ttymouse=xterm2                         | " Setting Mouse for Tmux
+set mouse=a                                 | " Enable mouse drag on window splits
+set background=dark                         | " Set background
+colorscheme retrobox                        | " Set Color Scheme
+
+
+" ============================================================
+" [ Backspace Key Settings ]
+" ============================================================
+" Always let Vim handle backspace properly
+
+" Set backspace to handle indent, eol, and start 
+set backspace=indent,eol,start                              
+" Clear any existing backspace key setting
+set t_kb=                                                   
+
+" Universal Backspace Fix (works on ALL terminals)
+" Case 1: Terminal sends DEL ( ^? )
+inoremap <Char-0x7f> <BS>
+nnoremap <Char-0x7f> <BS>
+cnoremap <Char-0x7f> <BS>
+
+
+" Case 2: Terminal sends Ctrl-H ( ^H )
+inoremap <C-H> <BS>
+nnoremap <C-H> <BS>
+cnoremap <C-H> <BS>
+
+" Case 3: Terminal sends actual <BS>
+inoremap <BS> <BS>
+nnoremap <BS> <BS>
+cnoremap <BS> <BS>
+
+
+" ============================================================
+" [ Vundle Plugin Manager Setup ]
+" ============================================================
+set rtp+=~/.vim/bundle/Vundle.vim               | " Set the runtime path to include Vundle
+set rtp+=~/custompackages/packages/             | " Set the runtime path to include custom packages
+call vundle#begin('~/.vim/plugged')             | " call vundle#begin('~/.vim/plugged')
+Plugin 'VundleVim/Vundle.vim'                   | " Let Vundle manage Vundle
+Plugin 'sheerun/vim-polyglot'                   | " Language pack for Vim, supports many languages
+Plugin 'jiangmiao/auto-pairs'                   | " Auto Pairs for brackets, quotes, etc.
+Plugin 'preservim/nerdtree'                     | " NERDTree for file system explorer
+Plugin 'preservim/tagbar'                       | " Tagbar for browsing tags
+Plugin 'dyng/ctrlsf.vim'                        | " CtrlSF for searching files
+Plugin 'terryma/vim-multiple-cursors'           | " Multi Cursor support
+Plugin 'tmux-plugins/vim-tmux-focus-events'     | " Vim Plugin Focus event
+Plugin 'junegunn/fzf'                           | " Fuzzy Finder
+Plugin 'junegunn/fzf.vim'                       | " Fzf Vim Integration
+Plugin 'rickhowe/diffchar.vim'                  | " DiffChar for character level diffing
+
+" Color Schemes
+Plugin 'cocopon/iceberg.vim'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'Badacadabra/vim-archery'
+Plugin 'kristijanhusak/vim-hybrid-material'
+Plugin 'scheakur/vim-scheakur'
+
+call vundle#end()                               | " required
+
+
+
+" ============================================================
+" [ AutoPairs Configuration ]
+" ============================================================
+let g:AutoPairsShortcutToggle = '<C-P>'         | " Shortcut to toggle Auto Pairs On/Off
+
+
+" ============================================================
+" [ NERDTree Configuration ]
+" ============================================================
+" Show the bookmarks table
+let NERDTreeShowBookmarks = 1
+
+" Show hidden files
+let NERDTreeShowHidden = 1
+
+" Hide line numbers
+let NERDTreeShowLineNumbers = 0
+
+" Use the minimal menu (m)
+let NERDTreeMinimalMenu = 1
+
+" Panel opens on the left side 
+let NERDTreeWinPos =  "left"
+
+"Set panel width to 31 columns 
+let NERDTreeWinSize = 31
+
+" Change the working directory to the selected node's directory
+let g:NERDTreeChDirMode = 2
+
+" Map F2 to toggle NERDTree
+nmap <F2> :NERDTreeToggle<CR>
+
+" Same NERDTree on every tab automatically
+autocmd BufWinEnter * if &buftype != 'quickfix' && getcmdwintype() == '' | silent NERDTreeMirror | endif
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" Start NERDTree when Vim is started without file arguments.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+" Start NERDTree when Vim starts with a directory argument.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+
+
+" ============================================================
+" [ Tagbar Configuration ]
+" ============================================================
+" Focus on the Tagbar window when opened
+let g:tagbar_autofocus = 1
+
+" Automatically highlight the active tag in Tagbar
+let g:tagbar_autoshowtag = 1
+
+" Position Tagbar on the right side vertically
+let g:tagbar_position = 'botright vertical'
+
+" Map F8 to toggle Tagbar
+nmap <F8> :TagbarToggle<CR>
+
+
+" ============================================================
+" [ CtrlSF Configuration ]
+" ============================================================
+" Use ripgrep as the backend for searching files
+let g:ctrlsf_backend = 'rg'
+
+" Auto close the results panel when opening a file
+let g:ctrlsf_auto_close = { "normal":0, "compact":0  }
+
+" Don't fold the search results by default
+let g:ctrlsf_fold_result = 0
+
+" Focus on the search window at start
+let g:ctrlsf_auto_focus = { "at":"start"  }
+
+" Don't open the preview window automatically
+let g:ctrlsf_auto_preview = 0
+
+" Use smart case sensitivity for searches
+let g:ctrlsf_case_sensitive = 'smart'
+
+" Use normal view by default
+let g:ctrlsf_default_view = 'normal'
+
+" Use absoulte search by default
+let g:ctrlsf_regex_pattern = 0
+
+" Position of search window  
+let g:ctrlsf_position = 'bottom'
+
+" Height of the search window
+let g:ctrlsf_winsize = '20'
+
+" Search from the current working directory
+let g:ctrlsf_default_root = 'cwd'
+
+
+
+" (Ctrl+k) Open search prompt (Normal Mode)
+nmap <C-k>k <Plug>CtrlSFPrompt
+
+" (Ctrl-k + k) Open search prompt with selection (Visual Mode)
+xmap <C-k>k <Plug>CtrlSFVwordPath
+
+" (Ctrl-k + k) Perform search with selection (Visual Mode)
+xmap <C-k>K <Plug>CtrlSFVwordExec
+
+" (Ctrl-k + n) Open search prompt with current word (Normal Mode)
+nmap <C-k>n <Plug>CtrlSFCwordPath
+
+" (Ctrl-k + o )Open CtrlSF window (Normal Mode)
+nnoremap <C-k>o :CtrlSFOpen<CR>
+
+" (Ctrl-k + t) Toggle CtrlSF window (Normal Mode)
+nnoremap <C-k>t :CtrlSFToggle<CR>
+
+" (Ctrl-F + T) Toggle CtrlSF window (Insert Mode)
+inoremap <C-k>T <Esc>:CtrlSFToggle<CR>"
+
+" Enable debug mode for CtrlSF
+" let g:ctrlsf_debug_mode = 1
+
+
+" ============================================================
+" [ Multiple Cursors Configuration ]
+" ============================================================
+" Disable default mappings
+let g:multi_cursor_use_default_mapping=0
+
+" Start multi-cursor on word
+let g:multi_cursor_start_word_key = '<C-m>'
+
+" Select all occurrences of word
+let g:multi_cursor_select_all_word_key = '<A-m>'
+
+" Move to next occurrence
+let g:multi_cursor_next_key = '<C-j>'
+
+" Move to previous occurrence
+let g:multi_cursor_prev_key = '<C-k>'
+
+" Skip occurrence
+let g:multi_cursor_skip_key = '<C-s>'
+
+" Quit multi-cursor mode
+let g:multi_cursor_quit_key = '<Esc>'
+
+
+" ============================================================
+" [ FZF Configuration ]
+" ============================================================
+" Initialize fzf_vim dictionary
+let g:fzf_vim = {}
+" Set preview window position and size
+let g:fzf_vim.preview_window = [ 'right,50%', 'ctrl-/']
+
+" ============================================================
+" [ DiffChar Configuration ]
+" ============================================================
+" Set Diff Unit to Char
+let g:DiffUnit = 'Char'
+" Set number of colors for Diff Char
+let g:DiffColors = 3
+
+" ============================================================
+" [ Misc ]
+" ============================================================
+" Sync syntax from start of file
+syntax sync fromstart
+
+
+" ============================================================
+" [ Leader Key Shortcuts ]
+" ============================================================
+
+" -------------------------------
+" File Search (FZF)
+" -------------------------------
+" <Space>f → Fuzzy file search
+nnoremap <leader>f :Files<CR>
+
+" <Space>g → Git files only
+nnoremap <leader>g :GFiles<CR>
+
+" <Space>r → Ripgrep search prompt
+nnoremap <leader>r :Rg<CR>
+
+" <Space>h → Recently opened files
+nnoremap <leader>h :History<CR>
+
+
+" -------------------------------
+" Explorer & Navigation
+" -------------------------------
+" <Space>n → Toggle NERDTree
+nnoremap <leader>n :NERDTreeToggle<CR>
+
+" <Space>b → Toggle Tagbar
+nnoremap <leader>b :TagbarToggle<CR>
+
+
+" -------------------------------
+" Project Search (CtrlSF)
+" -------------------------------
+" <Space>s → Search prompt
+nnoremap <leader>s <Plug>CtrlSFPrompt
+
+" <Space>o → Open CtrlSF window
+nnoremap <leader>o :CtrlSFOpen<CR>
+
+" <Space>t → Toggle CtrlSF window
+nnoremap <leader>t :CtrlSFToggle<CR>
+
+
+" -------------------------------
+" DiffChar (Optional)
+" -------------------------------
+" <Space>d → Toggle DiffChar highlights
+nnoremap <leader>d :DiffCharToggle<CR>
+
+
+" -------------------------------
+" Utility
+" -------------------------------
+" <Space>q → Visual block mode
+nnoremap <leader>q <C-V>
+
+
+" ============================================================
+" [ DOCS ]
+" ============================================================
+" Usage (Important Commands):
+"   File Search:
+"       :Files         → Fuzzy file search
+"       :GFiles        → Git files only
+"       :Rg <text>     → Search inside files
+"
+"   Explorer / Navigation:
+"       <F2>           → Toggle NERDTree
+"       <F8>           → Toggle Tagbar
+"
+"   Search (CtrlSF):
+"       <C-k>k         → Search prompt
+"       <C-k>t         → Toggle search result window
+"
+"   Misc:
+"       <C-q>          → Visual block mode
+"
+" ------------------------------------------------------------
