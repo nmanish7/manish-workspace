@@ -1,0 +1,218 @@
+// Place your key bindings in this file to override the defaults
+[
+    // Toggle Full Screen 
+    {
+        "key": "alt+enter",
+        "command": "workbench.action.toggleFullScreen",
+        "when": "!inZenMode"
+    },
+    // Close Sidebar Search
+    {
+        "key": "ctrl+space",
+        "command": "workbench.action.closeSidebar",
+        "when": "sideBarVisible && vim.mode == 'Normal'"
+    },
+    // Close Chat Sidebar
+    {
+        "key": "ctrl+space",
+        "command": "workbench.action.toggleAuxiliaryBar",
+        "when": "auxiliaryBarVisible"
+    },
+    // Close file by Shift + q
+    {
+        "key": "shift+q",
+        "command": "workbench.action.closeActiveEditor",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    // Horizontal Split Editor
+    {
+        "key": "ctrl+shift+enter",
+        "command": "workbench.action.splitEditorOrthogonal",
+        "when": "inQuickOpen"
+    },
+    // Increase/Decrease Editor Size
+    {
+        "key": "alt+h",
+        "command": "workbench.action.decreaseViewSize",
+        "when": "editorFocus"
+    },
+    {
+        "key": "alt+l",
+        "command": "workbench.action.increaseViewSize",
+        "when": "editorFocus"
+    },
+    // Inline Chat Editor
+    {
+        "key": "ctrl+i",
+        "command": "interactiveEditor.start",
+        "when": "editorTextFocus && inlineChatHasProvider && !editorReadonly"
+    },
+    // Focus Editor from Sidebar
+    {
+        "key": "ctrl+1",
+        "command": "workbench.action.focusFirstEditorGroup",
+        "when": "sideBarFocus || auxiliaryBarFocus"
+    },
+    // Ctrl + F in Vim Normal Mode to open Search
+    {
+        "key": "ctrl+f",
+        "command": "actions.find",
+        "when": "vim.mode == 'Normal'"
+    },
+    // Alt + j/k move lines up and down in editor
+    {
+        "key": "alt+j",
+        "command": "editor.action.moveLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+k",
+        "command": "editor.action.moveLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    // Shift + Alt + Up/Down to copy lines up and down in editor
+    {
+        "key": "shift+alt+j",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+k",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    // Ctrl + Alt + j/k multiple cursors up and down
+    {
+        "key": "ctrl+alt+j",
+        "command": "editor.action.insertCursorBelow",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+alt+k",
+        "command": "editor.action.insertCursorAbove",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+
+    // Alt + D to select next occurrence of word
+    {
+        "key": "alt+d",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    // Ctrl + Shift + L to select all occurrences of word
+    {
+        "key": "ctrl+shift+l",
+        "command": "editor.action.selectHighlights",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+
+    // Terminal Keybindings
+
+    // Ctrl + alt + t to toggle terminal
+    {
+        "key": "ctrl+alt+t",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    // Ctrl + alt + n to create new terminal
+    {
+        "key": "ctrl+alt+n",
+        "command": "workbench.action.terminal.new"
+    },
+    // Ctrl + alt + w to kill terminal
+    {
+        "key": "ctrl+alt+w",
+        "command": "workbench.action.terminal.kill"
+    },
+
+    //  Ctrl + alt + m to maximize terminal
+    {
+        "key": "ctrl+alt+m",
+        "command": "workbench.action.toggleMaximizedPanel"
+    },
+
+    // Alt + h/l to navigate terminal panes
+    {
+        "key": "alt+l",
+        "command": "workbench.action.terminal.focusNext",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+h",
+        "command": "workbench.action.terminal.focusPrevious",
+        "when": "terminalFocus"
+    },
+    // Ctrl + p, previous command in terminal
+    {
+        "key": "ctrl+p",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u0010"
+        }, // Ctrl+P = ASCII 0x10
+        "when": "terminalFocus"
+    },
+    // Move cursor by word in terminal with Alt + b/f
+    {
+        "key": "alt+b",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001bb"
+        },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+f",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001bf"
+        },
+        "when": "terminalFocus"
+    },
+    // Move cursor end by Ctrl + e in terminal
+    {
+        "key": "ctrl+e",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u0005"
+        },
+        "when": "terminalFocus"
+    },
+    // Delete line all right with Ctrl + k in terminal
+    {
+        "key": "ctrl+k",
+        "command": "deleteAllRight",
+        "when": "terminalFocus"
+    },
+    // Alt + d, delete word right in terminal
+    {
+        "key": "alt+d",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001bd"
+        },
+        "when": "terminalFocus"
+    },
+    // Alt + Backspace, delete word left in terminal
+    {
+        "key": "alt+backspace",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001b\u007f" // ESC + DEL = Meta-Backspace
+        },
+        "when": "terminalFocus"
+    },
+    // Ctrl + f move forward one character in terminal
+    {
+        "key": "ctrl+f",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u0006"
+        },
+        "when": "terminalFocus"
+    },
+    // Ctrl + shift + f to search in terminal
+    {
+        "key": "ctrl+shift+f",
+        "command": "workbench.action.terminal.focusFind",
+        "when": "terminalFocus"
+    }
+]

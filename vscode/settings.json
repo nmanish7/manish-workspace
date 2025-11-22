@@ -1,0 +1,98 @@
+{ 
+    // Terminal settings for tmux integration
+    "terminal.integrated.allowMnemonics": true,
+    "terminal.integrated.profiles.linux": {
+        "tmux-shell": {
+            "path": "tmux",
+            "args": [
+                "new",
+                "-As",
+                "vscode-${workspaceFolderBasename}"
+            ],
+            "env": {
+                "VSCODE_IPC_HOOK_CLI": "${env:VSCODE_IPC_HOOK_CLI}",
+                "VSCODE_AGENT_FOLDER": "${env:VSCODE_AGENT_FOLDER}"
+            }
+        }
+    },
+    // "terminal.integrated.defaultProfile.linux": "tmux-shell",
+    "editor.fontFamily": "CaskaydiaCove Nerd Font",
+    "editor.codeLensFontFamily": "CaskaydiaCove Nerd Font",
+    "workbench.settings.applyToAllProfiles": [
+        "editor.fontFamily"
+    ],
+    "vim.leader": "<space>",
+
+    // Make VSCodeVim use the OS clipboard (like Vim's `set clipboard=unnamedplus`)
+    "vim.useSystemClipboard": true,
+
+    "vim.normalModeKeyBindingsNonRecursive": [
+        // Toggle Explorer
+        {"before": ["<leader>", "e"], "commands": ["workbench.view.explorer"]},
+
+        // Quick Open
+        {"before": ["<leader>", "p"], "commands": ["workbench.action.quickOpen"]},
+
+        // Search in files
+        {"before": ["<leader>", "f"], "commands": ["workbench.action.findInFiles"]},
+
+        // Vertical Split
+        {"before": ["<leader>", "%"], "after": [":", "v", "s", "p", "l", "i", "t", "<CR>"]},
+
+        // Horizontal Split
+        {"before": ["<leader>", "\""], "after": [":", "s", "p", "l", "i", "t", "<CR>"]},
+        
+        // Move focus to left/right/up/down splits
+        {"before": ["<leader>", "H"], "after": ["<C-w>", "h"]},
+        {"before": ["<leader>", "L"], "after": ["<C-w>", "l"]},
+        {"before": ["<leader>", "K"], "after": ["<C-w>", "k"]},
+        {"before": ["<leader>", "J"], "after": ["<C-w>", "j"]},
+        
+        // Resize splits with alt + h/l
+        {"key": "alt+h", "command": "resizeEditor.left"},
+        {"key": "alt+l", "command": "resizeEditor.right"},
+
+        // leader + b to previous recently used tab in group
+        {"before": ["<leader>", "b"], "commands": ["workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"]},
+
+        // leader + B to previous recently used tab
+        {"before": ["<leader>", "B"], "commands": ["workbench.action.quickOpenPreviousRecentlyUsedEditor"]},
+
+        // leader + l to next tab
+        {"before": ["<leader>", "l"], "commands": ["workbench.action.nextEditor"]},
+
+        // leader + h to previous tab
+        {"before": ["<leader>", "h"], "commands": ["workbench.action.previousEditor"]},
+
+        // leader + 1,2,3,... to switch to tab 1,2,3,...
+        {"before": ["<leader>", "1"], "commands": ["workbench.action.openEditorAtIndex1"]},
+        {"before": ["<leader>", "2"], "commands": ["workbench.action.openEditorAtIndex2"]},
+        {"before": ["<leader>", "3"], "commands": ["workbench.action.openEditorAtIndex3"]},
+        {"before": ["<leader>", "4"], "commands": ["workbench.action.openEditorAtIndex4"]},
+        {"before": ["<leader>", "5"], "commands": ["workbench.action.openEditorAtIndex5"]},
+        {"before": ["<leader>", "6"], "commands": ["workbench.action.openEditorAtIndex6"]},
+        {"before": ["<leader>", "7"], "commands": ["workbench.action.openEditorAtIndex7"]},
+        {"before": ["<leader>", "8"], "commands": ["workbench.action.openEditorAtIndex8"]},
+        {"before": ["<leader>", "9"], "commands": ["workbench.action.openEditorAtIndex9"]},
+        {"before": ["<leader>", "0"], "commands": ["workbench.action.lastEditorInGroup"]},
+        
+        // Ctrl + s to save file
+        {"before": ["<C-s>"], "commands": ["workbench.action.files.save"]},
+
+        // Toggle relative line numbers
+        {"before": ["<leader>", "r"], "commands": [":set relativenumber!"]}
+    ],
+
+    // Disable vim keys for h,j,k,l and enter to use default editor behavior
+    "vim.handleKeys": {
+        "h": false,
+        "j": false,
+        "k": false,
+        "l": false,
+        "enter": false,
+        "ctrl+enter": false
+    },
+
+    // Always show line numbers
+    "editor.lineNumbers": "relative"
+}
