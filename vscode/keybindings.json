@@ -105,7 +105,17 @@
         "command": "editor.action.selectHighlights",
         "when": "editorTextFocus && !editorReadonly"
     },
-
+    // Rebinding Undo and Redo key
+    {
+        "key": "u",
+        "command": "undo",
+        "when": "editorTextFocus && !editorReadonly && vim.active && vim.mode == 'Normal'"
+    },
+    {
+        "key": "ctrl+r",
+        "command": "redo",
+        "when": "editorTextFocus && !editorReadonly"
+    },
     // Terminal Keybindings
 
     // Ctrl + alt + t to toggle terminal
