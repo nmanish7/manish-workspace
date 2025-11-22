@@ -66,7 +66,7 @@ alias newt "source ~/custompackages/packages/new -t"
 ### Alias for resetting the tmux prefix key as it got hung up in the client side terminal but normal command work well
 alias tmr 'tmux set -g prefix C-a \; bind-key C-a send-prefix \; source-file ~/.tmux.conf'
 
-### alias dmanishc. "cd /slowfs/swe82/dmanish/"
+### alias dmanishc. "cd /slowfs/dmanish/"
 
 ### Log command alias
 alias logcmd '& tee `date +%b%d_%Hh%Mm%Ss`_\!:1.log; echo "✅ Log files:"; ls -t *s_\!:1.log | xargs -n1 readlink -f'

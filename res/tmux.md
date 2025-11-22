@@ -203,7 +203,7 @@ To create a persistent SSH connection with tmux in Windows Terminal:
 
 **Command:**
 ```powershell
-%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe ssh -X -t dmanish@us01odcvde21813 tmux new -As dmanish
+%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe ssh -X -t dmanish@hostname tmux new -As dmanish
 ```
 
 **Setting up in Windows Terminal:**
@@ -214,7 +214,7 @@ To create a persistent SSH connection with tmux in Windows Terminal:
    - **Name:** `Remote Tmux (dmanish)`
    - **Command line:** 
      ```
-     %SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe ssh -X -t dmanish@us01odcvde21813 tmux new -As dmanish
+     %SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe ssh -X -t dmanish@hostname tmux new -As dmanish
      ```
    - **Starting directory:** (optional)
    - **Icon:** (optional)
